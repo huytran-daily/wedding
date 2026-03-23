@@ -131,7 +131,7 @@ export const semanticColors = {
     info: baseColors.info[700],
     'brand-primary': baseColors.primary[500],
     'wedding-primary': '#3D2C2C',
-    'wedding-red': '#8e3c52',
+    'wedding-red': '#7e3549',
     'wedding-pink': '#F5E1DA'
   },
   background: {
