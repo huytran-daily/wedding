@@ -188,8 +188,8 @@ export default function InsidePage() {
 
         {/* Closing */}
         <p className="text-center font-times text-xs uppercase tracking-[0.08em]">
-          SỰ HIỆN DIỆN CỦA QUÝ VỊ <br />
-          LÀ NIỀM VINH HẠNH CHO GIA ĐÌNH CHÚNG TÔI <br />
+          SỰ HIỆN DIỆN CỦA QUÝ BẠN <br />
+          LÀ NIỀM VINH HẠNH CHO GIA ĐÌNH CHÚNG MÌNH <br />
           RẤT HÂN HẠNH ĐƯỢC ĐÓN TIẾP!
         </p>
       </div>

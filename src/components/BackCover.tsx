@@ -4,10 +4,10 @@ export default function BackCover() {
       {/* Decorative diagonal lines */}
 
       {/* Center banner with names */}
-      <div className="bg-background-wedding-secondary absolute top-1/2 z-10 flex h-1/5 w-full -translate-y-1/2 flex-col items-center justify-center px-8 shadow-[0px_4px_16px_2px_#3D2C2C]">
-        <p className="text-center font-times text-sm font-normal tracking-wide text-white antialiased cursor-pointer">
-          Chân thành cảm ơn sự hiện diện cùng tình cảm yêu thương của tất cả quý
-          vị để ngày vui trở nên trọn vẹn và ý nghĩa. <br /> Chúc quý vị có một
+      <div className="bg-background-wedding-secondary absolute top-1/2 z-10 flex h-1/5 w-full -translate-y-1/2 flex-col items-center justify-center px-10  shadow-[0px_4px_16px_2px_#3D2C2C]">
+        <p className="text-center font-times text-xs font-normal tracking-wide text-white antialiased cursor-pointer ">
+          Chân thành cảm ơn sự hiện diện cùng tình cảm yêu thương của tất cả
+          mọi người để ngày vui trở nên trọn vẹn và ý nghĩa. <br /> Chúc mọi người có một
           buổi tiệc vui vẻ và đáng nhớ. <br /> Trân trọng!
         </p>
       </div>

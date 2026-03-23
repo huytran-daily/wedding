@@ -43,8 +43,6 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
   const [backEntering, setBackEntering] = useState(false);
   const handleInsideClick = () => {
     setBannerPhase('rising');
-    // After rise, start blur-fade
-    setTimeout(() => setBannerPhase('fading'), 1000);
     // After fade, switch page then clear entering blur
     setTimeout(() => {
       setBackEntering(true);
@@ -52,7 +50,7 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
       setBannerPhase('normal');
       onClickFrontCover?.();
       requestAnimationFrame(() => requestAnimationFrame(() => setBackEntering(false)));
-    }, 760);
+    }, 300);
   };
 
   useEffect(() => {
