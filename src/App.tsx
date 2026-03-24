@@ -195,7 +195,7 @@ function App() {
       <video
         ref={videoRef} 
         className="fixed top-0 left-0 w-full h-full object-cover"
-        src={`${import.meta.env.BASE_URL}video/bg.mp4`}
+        src={`${import.meta.env.BASE_URL}video/bg-2.mp4`}
         autoPlay
         loop
         // muted
