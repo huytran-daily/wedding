@@ -3,9 +3,16 @@ import LeafIcon from '../assets/leaf-icon';
 import AndIcon from '../assets/and-icon';
 import LaurelWreathIcon from '../assets/laurel-wreath-icon';
 
-export default function InsidePage() {
+interface Props {
+  onClickInside?: () => void;
+}
+
+export default function InsidePage({ onClickInside }: Props) {
   return (
-    <div className="flex h-full">
+    <div
+      className="flex h-full cursor-pointer"
+      onClick={onClickInside}
+    >
       {/* Left panel — decorative envelope flap */}
       <div className="relative w-[17%] flex-shrink-0 overflow-hidden border-r border-[#C4A08A]/60 bg-transparent">
         <div

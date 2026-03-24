@@ -8,6 +8,8 @@ type TabView = 'back' | 'front' | 'inside';
 const DESIGN_H = 600;
 const FRONT_DESIGN_W = 450;
 const INSIDE_DESIGN_W = 1080;
+const LEFT_W = INSIDE_DESIGN_W * 0.17;           // left panel width ≈ 183.6
+const PANEL_W = (INSIDE_DESIGN_W - LEFT_W) / 2;  // center/right panel width ≈ 448.2
 const PAD_X = 24;      // px-6 on each side
 const PAD_TOP = 24;    // pt-6
 const PAD_BOTTOM = 24; // pb-6
@@ -23,6 +25,7 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
   const [scale, setScale] = useState(1);
   const [insideScale, setInsideScale] = useState(1);
 
+  const [insideStep, setInsideStep] = useState<0 | 1 | 2>(0);
   const [bannerPhase, setBannerPhase] = useState<'normal' | 'rising' | 'fading'>('normal');
   const [insideEntering, setInsideEntering] = useState(false);
 
@@ -41,16 +44,25 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
   };
 
   const [backEntering, setBackEntering] = useState(false);
+  const doBackTransition = () => {
+    setBackEntering(true);
+    setActiveTab('back');
+    setInsideStep(0);
+    onClickFrontCover?.();
+    requestAnimationFrame(() => requestAnimationFrame(() => setBackEntering(false)));
+  };
   const handleInsideClick = () => {
-    setBannerPhase('rising');
-    // After fade, switch page then clear entering blur
-    setTimeout(() => {
-      setBackEntering(true);
-      setActiveTab('back');
-      setBannerPhase('normal');
-      onClickFrontCover?.();
-      requestAnimationFrame(() => requestAnimationFrame(() => setBackEntering(false)));
-    }, 300);
+    setInsideEntering(false);
+    // Desktop: skip zoom steps
+    if (window.innerWidth >= 768) {
+      doBackTransition();
+      return;
+    }
+    if (insideStep < 2) {
+      setInsideStep(s => (s + 1) as 0 | 1 | 2);
+    } else {
+      doBackTransition();
+    }
   };
 
   useEffect(() => {
@@ -103,18 +115,32 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
         )}
         {activeTab === 'inside' && (
           <div
-            className="flex-shrink-0 overflow-hidden rounded-2xl cursor-pointer"
-            style={{
-              height: DESIGN_H * insideScale,
-              width: INSIDE_DESIGN_W * insideScale,
+            className="flex-shrink-0 overflow-hidden rounded-2xl cursor-pointer  justify-center items-center"
+            style={{ 
+              height: DESIGN_H * scale, width: FRONT_DESIGN_W * scale,
               filter: insideEntering ? 'blur(12px)' : 'blur(0px)',
               opacity: insideEntering ? 0 : 1,
-              transition:'filter 0.5s ease-out, opacity 0.5s ease-out',
-            }}
-            onClick={handleInsideClick}
+               transition: 'filter 0.5s ease-out, opacity 0.5s ease-out',
+             }}
+            
           >
-            <div style={{ width: INSIDE_DESIGN_W, height: DESIGN_H, transform: `scale(${insideScale})`, transformOrigin: 'top left' }}>
-              <InsidePage />
+            <div
+              className='' 
+              style={{
+                width: INSIDE_DESIGN_W,
+                height: DESIGN_H,
+                transformOrigin: 'top left',
+                transition: 'transform 0.4s ease-in-out',
+                
+                transform:
+                  insideStep === 1
+                    ? `scale(${scale}) translateX(-${LEFT_W}px)`
+                    : insideStep === 2
+                    ? `scale(${scale}) translateX(-${LEFT_W + PANEL_W}px)`
+                    : `scale(${insideScale}) translateY(${DESIGN_H * (scale - insideScale) / (2 * insideScale)}px)`,
+              }}
+            >
+              <InsidePage onClickInside={handleInsideClick} />
             </div>
           </div>
         )}
@@ -128,9 +154,9 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
              }}
             onClick={() => {
               setBannerPhase('normal');
-              setActiveTab('front')
-            }
-          }
+              setInsideStep(0);
+              setActiveTab('front');
+            }}
           >
             <div style={{ width: FRONT_DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}>
               <BackCover />
