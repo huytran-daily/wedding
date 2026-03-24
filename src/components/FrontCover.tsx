@@ -4,6 +4,7 @@ interface FrontCoverProps {
 }
 
 export default function FrontCover({ onClickCenterBanner, bannerPhase = 'normal' }: FrontCoverProps) {
+
   return (
     <div className="relative flex h-full flex-col items-center justify-between overflow-hidden bg-[#F5E1DA] py-10">
       {/* Decorative diagonal lines */}

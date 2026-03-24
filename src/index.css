@@ -1,6 +1,11 @@
 /* Google Fonts for wedding typography */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Allura&family=Great+Vibes&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+@keyframes handClickBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 @import "tailwindcss";
 @plugin "tailwindcss-animate";
 

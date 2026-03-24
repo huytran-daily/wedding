@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import FrontCover from './components/FrontCover';
 import InsidePage from './components/InsidePage';
 import BackCover from './components/BackCover';
+import { Icon } from '@iconify/react';
 
 type TabView = 'back' | 'front' | 'inside';
 
@@ -44,26 +45,35 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
   };
 
   const [backEntering, setBackEntering] = useState(false);
-  const doBackTransition = () => {
-    setBackEntering(true);
+
+  const doBackTransition = useCallback(
+    () => {
+       setBackEntering(true);
     setActiveTab('back');
     setInsideStep(0);
     onClickFrontCover?.();
     requestAnimationFrame(() => requestAnimationFrame(() => setBackEntering(false)));
-  };
-  const handleInsideClick = () => {
-    setInsideEntering(false);
-    // Desktop: skip zoom steps
-    if (window.innerWidth >= 768) {
-      doBackTransition();
-      return;
-    }
-    if (insideStep < 2) {
-      setInsideStep(s => (s + 1) as 0 | 1 | 2);
-    } else {
-      doBackTransition();
-    }
-  };
+    },
+    [onClickFrontCover],
+  )
+
+  const handleInsideClick = useCallback(
+    () => {
+      setInsideEntering(false);
+      // Desktop: skip zoom steps
+      if (window.innerWidth >= 768) {
+        doBackTransition();
+        return;
+      }
+      if (insideStep < 2) {
+        setInsideStep(s => (s + 1) as 0 | 1 | 2);
+      } else {
+        doBackTransition();
+      }
+    },
+    [doBackTransition, insideStep],
+  )
+ 
 
   useEffect(() => {
     const update = () => {
@@ -77,25 +87,33 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  return (
-    <div className="flex h-screen w-screen flex-col items-center gap-6 overflow-hidden px-6 pt-6 pb-6">
-      {/* Tab navigator */}
-      {/* <div className="flex gap-1 rounded-full bg-[#3D2C2C]/10 p-1">
-        {TAB_LABELS.map(({ key, label }) => (
-          <button
-            className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
-              activeTab === key
-                ? 'bg-background-wedding-secondary text-white shadow-md'
-                : 'text-text-wedding-primary hover:bg-background-wedding-secondary/10'
-            }`}
-            key={key}
-            onClick={() => setActiveTab(key)}
-          >
-            {label}
-          </button>
-        ))}
-      </div> */}
+    const [showHandClick, setShowHandClick] = useState(false);
 
+    useEffect(() => {
+      console.log('1 :>> ', 1);
+      setTimeout(() => setShowHandClick(true), 3000);
+    }, [])
+
+    useEffect(() => {
+      setTimeout(() => setShowHandClick(prev => !prev), 5000);
+    }, [showHandClick])
+ 
+
+  return (
+    <div className="relative flex h-screen w-screen flex-col items-center gap-6 overflow-hidden px-6 pt-6 pb-6">
+     <Icon
+        icon="clarity:cursor-hand-click-line"
+        className={`absolute top-[55%] left-[55%] -translate-x-1/2 -translate-y-1/2 -rotate-30 w-6 h-6 z-20 ${
+          showHandClick && activeTab !== 'back' ? 'block' : 'hidden'
+        }`}
+        style={{
+          animation: 'handClickBlink 0.8s ease-in-out infinite',
+          color:
+            activeTab === 'inside'
+              ? 'rgba(3, 0, 0, 0.8)'
+              : 'rgba(233, 230, 231, 0.8)',
+        }}
+      />
       {/* Card view — flex-1 fills remaining height, centers card both axes */}
       <div className="flex flex-1 items-center justify-center">
         {activeTab === 'front' && (
@@ -117,7 +135,7 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
           <div
             className="flex-shrink-0 overflow-hidden rounded-2xl cursor-pointer  justify-center items-center"
             style={{ 
-              height: DESIGN_H * scale, width: FRONT_DESIGN_W * scale,
+              height: DESIGN_H * scale, width: window.innerWidth >= 768 ? INSIDE_DESIGN_W * scale : FRONT_DESIGN_W * scale,
               filter: insideEntering ? 'blur(12px)' : 'blur(0px)',
               opacity: insideEntering ? 0 : 1,
                transition: 'filter 0.5s ease-out, opacity 0.5s ease-out',
