@@ -5,7 +5,9 @@ import BackCover from './components/BackCover';
 import { Icon } from '@iconify/react';
 import { clients, Language } from './shared/theme/data';
 
+
 type TabView = 'back' | 'front' | 'inside';
+
 
 const DESIGN_H = 600;
 const FRONT_DESIGN_W = 450;
@@ -18,6 +20,7 @@ const PAD_BOTTOM = 24; // pb-6
 const TAB_H = 44;      // approximate rendered tab bar height
 const GAP = 24;        // gap-6 between tab bar and card
 
+
 interface InvitationPageProps {
   onClickFrontCover?: () => void;
 }
@@ -25,8 +28,27 @@ interface InvitationPageProps {
 function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
   const params = new URLSearchParams(window.location.search);
 
+
+  // const [wishes, setWishes] = useState<unknown[]>([])
+
+  // useEffect(() => {
+  //   async function getWishes() {
+  //     const { data: wishes } = await supabase.from('wishes').select()
+
+  //     if (wishes) {
+  //       setWishes(wishes);
+  //     }
+  //   }
+
+  //   getWishes()
+  // }, [])
+
+  // console.log('wishes :>> ', wishes);
+
+
+  
   const clientId = params.get('id');
-  const lang = (params.get('lang') as Language) || Language.vi;
+  const [lang, setLang] = useState((params.get('lang') as Language) || Language.vi)
 
   const client = clients.find(c => c.id === clientId);
 
@@ -95,14 +117,14 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-    const [showHandClick, setShowHandClick] = useState(false);
+  const [showHandClick, setShowHandClick] = useState(false);
 
-    useEffect(() => {
+  useEffect(() => {
       setTimeout(() => setShowHandClick(true), 3000);
-    }, [])
+  }, [])
 
 
-    useEffect(() => {
+  useEffect(() => {
       if (showHandClick) {
         setTimeout(() => setShowHandClick(prev => !prev), 2000);
         return;
@@ -113,7 +135,7 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
           setTimeout(() => setShowHandClick(prev => !prev), 30000);
         }
       }
-    }, [showHandClick])
+  }, [showHandClick])
  
 
   return (
@@ -177,7 +199,7 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
                     : `scale(${insideScale}) translateY(${DESIGN_H * (scale - insideScale) / (2 * insideScale)}px)`,
               }}
             >
-              <InsidePage onClickInside={handleInsideClick} />
+              <InsidePage onClickInside={handleInsideClick} client={client} lang={lang}/>
             </div>
           </div>
         )}
@@ -192,11 +214,13 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
             onClick={() => {
               setBannerPhase('normal');
               setInsideStep(0);
+              setLang((prev) => prev === Language.en ? Language.vi : Language.en);
               setActiveTab('front');
+
             }}
           >
             <div style={{ width: FRONT_DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}>
-              <BackCover />
+              <BackCover client={client} lang={lang}/>
             </div>
           </div>
         )}

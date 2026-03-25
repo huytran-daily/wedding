@@ -132,7 +132,7 @@ export const semanticColors = {
     'brand-primary': baseColors.primary[500],
     'wedding-primary': '#3D2C2C',
     'wedding-red': '#7e3549',
-    'wedding-pink': '#F5E1DA'
+    'wedding-pink': '#F5E1DA',
   },
   background: {
     default: baseColors.base.white,
@@ -170,7 +170,9 @@ export const semanticColors = {
     },
     wedding: {
       primary: '#F5E1DA',
-      secondary: '#6B2D3E'
+      secondary: '#6B2D3E',
+      yellow: '#d2bc97',
+
     }
   },
   border: {
