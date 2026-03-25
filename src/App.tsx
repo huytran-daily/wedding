@@ -3,6 +3,7 @@ import FrontCover from './components/FrontCover';
 import InsidePage from './components/InsidePage';
 import BackCover from './components/BackCover';
 import { Icon } from '@iconify/react';
+import { clients, Language } from './shared/theme/data';
 
 type TabView = 'back' | 'front' | 'inside';
 
@@ -22,6 +23,13 @@ interface InvitationPageProps {
 }
 
 function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
+  const params = new URLSearchParams(window.location.search);
+
+  const clientId = params.get('id');
+  const lang = (params.get('lang') as Language) || Language.vi;
+
+  const client = clients.find(c => c.id === clientId);
+
   const [activeTab, setActiveTab] = useState<TabView>('front');
   const [scale, setScale] = useState(1);
   const [insideScale, setInsideScale] = useState(1);
@@ -90,12 +98,21 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
     const [showHandClick, setShowHandClick] = useState(false);
 
     useEffect(() => {
-      console.log('1 :>> ', 1);
       setTimeout(() => setShowHandClick(true), 3000);
     }, [])
 
+
     useEffect(() => {
-      setTimeout(() => setShowHandClick(prev => !prev), 5000);
+      if (showHandClick) {
+        setTimeout(() => setShowHandClick(prev => !prev), 2000);
+        return;
+      } else {
+        if (insideStep === 0) {
+          setTimeout(() => setShowHandClick(prev => !prev), 8000);
+        } else {
+          setTimeout(() => setShowHandClick(prev => !prev), 30000);
+        }
+      }
     }, [showHandClick])
  
 
@@ -125,6 +142,8 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
           >
             <div style={{ width: FRONT_DESIGN_W, height: DESIGN_H, transform: `scale(${scale})`, transformOrigin: 'top left' }}>
               <FrontCover
+                client={client}
+                lang={lang}
                 onClickCenterBanner={handleBannerClick}
                 bannerPhase={bannerPhase}
               />
@@ -195,7 +214,7 @@ function App() {
       <video
         ref={videoRef} 
         className="fixed top-0 left-0 w-full h-full object-cover"
-        src={`${import.meta.env.BASE_URL}video/bg-2.mp4`}
+        src={`${import.meta.env.BASE_URL}/video/bg-2.mp4`}
         autoPlay
         loop
         // muted

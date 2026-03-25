@@ -1,10 +1,15 @@
+import { Language, type Client } from "../shared/theme/data";
+
 interface FrontCoverProps {
+  client?: Client;
+  lang: Language;
   onClickCenterBanner?: () => void;
   bannerPhase?: 'normal' | 'rising' | 'fading';
 }
 
-export default function FrontCover({ onClickCenterBanner, bannerPhase = 'normal' }: FrontCoverProps) {
-
+export default function FrontCover({ client, lang, onClickCenterBanner, bannerPhase = 'normal' }: FrontCoverProps) {
+  console.log('client :>> ', client);
+  console.log('lang :>> ', lang);
   return (
     <div className="relative flex h-full flex-col items-center justify-between overflow-hidden bg-[#F5E1DA] py-10">
       {/* Decorative diagonal lines */}
@@ -17,11 +22,13 @@ export default function FrontCover({ onClickCenterBanner, bannerPhase = 'normal'
       <div className="flex w-full justify-end px-10">
         <div className="z-10 flex w-fit flex-col items-end justify-end gap-2">
           <h2 className="font-times text-xl font-medium tracking-[0.1em]">
-            THIỆP MỜI
+            {/* {lang === Language.en ? 'WEDDING INVITATION' : 'THIỆP MỜI'} */}
+            {client?.type === 'notice' ? (lang !== Language.en ? 'THIỆP BÁO HỶ' : 'WEDDING ANNOUNCEMENT') : (lang !== Language.en ? 'THIỆP MỜI' : 'Wedding Invitation')}
           </h2>
-          <h3 className="text-text-wedding-primary font-vibes text-lg font-normal tracking-[0.1em]">
-            Wedding Invitation
-          </h3>
+            <h3 className="text-text-wedding-primary font-vibes text-lg font-normal tracking-[0.1em]">
+              {/* Wedding Invitation */}
+              {client?.type === 'notice' ? 'Save the Date' : (lang !== Language.en ? 'Wedding Invitation' : 'Save the Date')}
+            </h3>
           <div className="my-2 h-px w-24 bg-[#3D2C2C]/60" />
           <p className="text-text-wedding-primary font-times text-sm tracking-[0.1em]">
             02.05.2026
@@ -49,11 +56,15 @@ export default function FrontCover({ onClickCenterBanner, bannerPhase = 'normal'
 
       {/* Bottom section */}
       <div className="flex w-full justify-end px-10">
-        <div className="z-10 flex flex-col items-end gap-5">
-          <p className="text-text-wedding-primary font-times text-xs">
-            TRÂN TRỌNG KÍNH MỜI
+        <div className="z-10 flex flex-col items-end gap-2">
+          <p className="text-text-wedding-primary font-times text-sm">
+            {client?.type === 'notice' ? (lang !== Language.en ? 'TRÂN TRỌNG BÁO TIN ĐẾN' : 'CORDIALLY ANNOUNCE TO') : (lang !== Language.en ? 'TRÂN TRỌNG KÍNH MỜI' : 'CORDIALLY INVITE')}
           </p>
-          <div className="border-text-wedding-red/50 h-px w-48 border-b border-dotted" />
+          {/* <div className="border-text-wedding-red/50 h-px w-48 border-b border-dotted" /> */}
+          <span className="border-text-wedding-red/40 w-48 min-h-[16px] border-b border-dotted text-center font-times font-vibes text-sm font-semibold text-[#c59846] tracking-[0.1em]">
+            {/* BFs: Toan&nbsp;&nbsp;Le&nbsp;&nbsp;&&nbsp;&nbsp;My&nbsp;&nbsp;Lang */}
+            {client?.data[lang].name }
+          </span>
         </div>
       </div>
     </div>
