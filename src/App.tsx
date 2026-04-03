@@ -248,6 +248,7 @@ function App() {
         loop
         // muted
         playsInline
+        webkit-playsinline="true"
       />
       <div className="relative z-10">
         <InvitationPage
