@@ -256,6 +256,7 @@ function App() {
 
   // Try to play audio on mount, but also after first user interaction (for autoplay restrictions)
   useEffect(() => {
+    if (isMobile) return; // Don't auto-play on mobile, wait for button
     const tryPlay = () => {
       if (audioRef.current) {
         audioRef.current.play().catch(() => {});
@@ -274,7 +275,14 @@ function App() {
       window.removeEventListener("click", onUserInteract);
       window.removeEventListener("touchstart", onUserInteract);
     };
-  }, []);
+  }, [isMobile]);
+
+  // Handler for Play Music button
+  const handlePlayMusic = () => {
+    if (audioRef.current) {
+      audioRef.current.play().catch(() => {});
+    }
+  };
 
   return (
     <div className="relative min-h-screen">
@@ -287,14 +295,14 @@ function App() {
       <audio
         ref={audioRef}
         src={`${import.meta.env.BASE_URL}/video/audio_wedding.mp3`}
-        autoPlay
+        autoPlay={!isMobile}
         loop
         style={{ display: "none" }}
       />
       <div className="relative z-10">
         <InvitationPage
           onClickFrontCover={() => {
-            // No video to play
+            handlePlayMusic();
           }}
         />
       </div>
