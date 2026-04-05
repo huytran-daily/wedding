@@ -236,24 +236,65 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
 }
 
 function App() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  // const videoRef = useRef<HTMLVideoElement>(null);
+  const params = new URLSearchParams(window.location.search);
+
+  const clientId = params.get("id");
+
+  const client = clients.find((c) => c.id === clientId);
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Try to play audio on mount, but also after first user interaction (for autoplay restrictions)
+  useEffect(() => {
+    const tryPlay = () => {
+      if (audioRef.current) {
+        audioRef.current.play().catch(() => {});
+      }
+    };
+    tryPlay(); // Try on mount
+    // Also play on first user interaction
+    const onUserInteract = () => {
+      tryPlay();
+      window.removeEventListener("click", onUserInteract);
+      window.removeEventListener("touchstart", onUserInteract);
+    };
+    window.addEventListener("click", onUserInteract);
+    window.addEventListener("touchstart", onUserInteract);
+    return () => {
+      window.removeEventListener("click", onUserInteract);
+      window.removeEventListener("touchstart", onUserInteract);
+    };
+  }, []);
 
   return (
     <div className="relative min-h-screen">
-      <video
-        ref={videoRef}
+      <img
         className="fixed top-0 left-0 w-full h-full object-cover"
-        src={`${import.meta.env.BASE_URL}/video/bg-2.mp4`}
+        src={`${import.meta.env.BASE_URL}/video/${isMobile ? `${client?.side !== "bride" ? "output_mobile.webp" : "wedding_bg_mobile.webp"}` : `${client?.side !== "bride" ? "output_desktop.webp" : "wedding_bg_desktop.webp"}`}`}
+        alt="Background"
+        style={{ zIndex: 0 }}
+      />
+      <audio
+        ref={audioRef}
+        src={`${import.meta.env.BASE_URL}/video/audio_wedding.mp3`}
         autoPlay
         loop
-        // muted
-        playsInline
-        webkit-playsinline="true"
+        style={{ display: "none" }}
       />
       <div className="relative z-10">
         <InvitationPage
           onClickFrontCover={() => {
-            videoRef.current?.play();
+            // No video to play
           }}
         />
       </div>
