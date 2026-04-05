@@ -14,7 +14,10 @@ export default function FrontCover({
   bannerPhase = "normal"
 }: FrontCoverProps) {
   return (
-    <div className="relative flex h-full flex-col items-center justify-between overflow-hidden bg-[#F5E1DA] py-10">
+    <div
+      className="relative flex h-full flex-col items-center justify-between overflow-hidden bg-[#F5E1DA] py-10"
+      onClick={onClickCenterBanner}
+    >
       {/* Decorative diagonal lines */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[33%] top-0 h-[51.25%] w-px origin-top -rotate-12 shadow-[4px_0px_8px_0px_#3D2C2C]" />

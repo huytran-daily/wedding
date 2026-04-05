@@ -205,7 +205,7 @@ export const clients: Client[] = [
         groupName: "EM",
         sayOur: "anh chị",
         message:
-          "Vì khoảng cách địa lý, anh chị hiểu rằng em có thể không thể tham dự trực tiếp. Tuy nhiên, em hoàn toàn có thể gửi những lời chúc tốt đẹp của mình vào “hộp thư chúc phúc” bên dưới."
+          "Vì khoảng cách địa lý, anh chị hiểu rằng em có thể không thể tham dự trực tiếp. Tuy nhiên, em hoàn toàn có thể gửi những lời chúc tốt đẹp của mình vào “hộp thư chúc phúc” bên dưới nhé."
       },
       [Language.en]: {
         name: "Tu Bon",
@@ -340,7 +340,7 @@ export const clients: Client[] = [
         groupName: "EM",
         sayOur: "anh chị",
         message:
-          "Vì khoảng cách địa lý, anh chị hiểu rằng em có thể không thể tham dự trực tiếp. Tuy nhiên, em hoàn toàn có thể gửi những lời chúc tốt đẹp của mình vào “hộp thư chúc phúc” bên dưới."
+          "Vì khoảng cách địa lý, anh chị hiểu rằng em có thể không thể tham dự trực tiếp. Tuy nhiên, em hoàn toàn có thể gửi những lời chúc tốt đẹp của mình vào “hộp thư chúc phúc” bên dưới nhé."
       },
       [Language.en]: {
         name: "Kevin",
@@ -359,7 +359,7 @@ export const clients: Client[] = [
       [Language.vi]: {
         name: "Tất cả người thân, bạn bè thân thiết",
         groupName: "MỌI NGƯỜI",
-        sayOur: "chúng mình",
+        sayOur: "chúng con/em",
         message:
           "Thay cho những tấm thiệp hồng chưa được trao tay. Vợ chồng chúng con/em, Trân trọng kính mời quý cô, dì, chú, bác, anh, chị, em, bạn bè gần xa... bớt chút thời gian thu xếp công việc đến chung vui cùng gia đình chúng con/em. "
       },
@@ -380,7 +380,7 @@ export const clients: Client[] = [
       [Language.vi]: {
         name: "Tất cả người thân, bạn bè thân thiết",
         groupName: "MỌI NGƯỜI",
-        sayOur: "chúng mình",
+        sayOur: "chúng con/em",
         message:
           "Thay cho những tấm thiệp hồng chưa được trao tay. Vợ chồng chúng con/em, Trân trọng kính mời quý cô, dì, chú, bác, anh, chị, em, bạn bè gần xa... bớt chút thời gian thu xếp công việc đến chung vui cùng gia đình chúng con/em. "
       },

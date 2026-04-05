@@ -117,19 +117,26 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
 
   return (
     <div className="relative flex h-screen w-screen flex-col items-center gap-6 overflow-hidden px-6 pt-6 pb-6">
-      <Icon
-        icon="clarity:cursor-hand-click-line"
-        className={`absolute top-[55%] left-[55%] -translate-x-1/2 -translate-y-1/2 -rotate-30 w-6 h-6 z-20 ${
+      <div
+        className={`flex flex-col justify-center items-center gap-1 absolute top-[60%] left-[55%] -translate-x-1/2 -translate-y-1/2 z-20 ${
           showHandClick && activeTab !== "back" ? "block" : "hidden"
         }`}
-        style={{
-          animation: "handClickBlink 0.8s ease-in-out infinite",
-          color:
-            activeTab === "inside"
-              ? "rgba(3, 0, 0, 0.8)"
-              : "rgba(233, 230, 231, 0.8)"
-        }}
-      />
+      >
+        <Icon
+          icon="clarity:cursor-hand-click-line"
+          className={`-rotate-30 w-6 h-6`}
+          style={{
+            animation: "handClickBlink 0.8s ease-in-out infinite",
+            color:
+              activeTab === "inside"
+                ? "rgba(3, 0, 0, 0.8)"
+                : "rgba(233, 230, 231, 0.8)"
+          }}
+        />
+        <span className="text-sm text-text-wedding-red font-times">
+          {lang !== Language.en ? "Nhấn để tiếp tục" : "Click to continue"}
+        </span>
+      </div>
       {/* Card view — flex-1 fills remaining height, centers card both axes */}
       <div className="flex flex-1 items-center justify-center">
         {activeTab === "front" && (
@@ -288,7 +295,7 @@ function App() {
     <div className="relative min-h-screen">
       <img
         className="fixed top-0 left-0 w-full h-full object-cover"
-        src={`${import.meta.env.BASE_URL}/video/${isMobile ? `${client?.side !== "bride" ? "output_mobile.webp" : "wedding_bg_mobile.webp"}` : `${client?.side !== "bride" ? "output_desktop.webp" : "wedding_bg_desktop.webp"}`}`}
+        src={`${import.meta.env.BASE_URL}/video/${isMobile ? `${client?.side !== "bride" ? "wedding_bg_mobile.webp" : "wedding_bg_mobile.webp"}` : `${client?.side !== "bride" ? "wedding_bg_desktop.webp" : "wedding_bg_desktop.webp"}`}`}
         alt="Background"
         style={{ zIndex: 0 }}
       />
