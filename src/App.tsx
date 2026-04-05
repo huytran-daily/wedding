@@ -112,7 +112,7 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
       setTimeout(() => setShowHandClick((prev) => !prev), 2000);
       return;
     } else {
-      if (insideStep !== 0) {
+      if (insideStep === 1 || insideStep === 2) {
         setTimeout(() => setShowHandClick((prev) => !prev), 10000);
       } else {
         setTimeout(() => setShowHandClick((prev) => !prev), 3000);
