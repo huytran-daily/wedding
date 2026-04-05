@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Language, type Client } from "../shared/theme/data";
 import { createClient } from "@supabase/supabase-js";
+import { Icon } from "@iconify/react";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -15,6 +16,20 @@ export default function BackCover({
   lang,
   onClickNext
 }: BackCoverProps) {
+  const groupName = client?.data[lang].groupName.toLowerCase();
+  const groupNameWithCapitalizedFirstChar = groupName
+    ? `${groupName.charAt(0).toUpperCase()}${groupName.slice(1)}`
+    : undefined;
+
+  const lastClickTime = useRef(0);
+
+  const handleClickNext = () => {
+    const now = Date.now();
+    if (now - lastClickTime.current < 500) return;
+    lastClickTime.current = now;
+    onClickNext?.();
+  };
+
   const [isNeedForm, setIsNeedForm] = useState(
     client?.type !== "notice" ? true : false
   );
@@ -38,20 +53,51 @@ export default function BackCover({
     setSuccessSent(true);
   };
 
+  const [showHandClick, setShowHandClick] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setShowHandClick(true), 3000);
+  }, []);
+
+  useEffect(() => {
+    if (showHandClick) {
+      setTimeout(() => setShowHandClick((prev) => !prev), 1000);
+      return;
+    } else {
+      setTimeout(() => setShowHandClick((prev) => !prev), 2000);
+    }
+  }, [showHandClick]);
+
   return (
     <div className="relative flex h-full flex-col items-center justify-end overflow-hidden bg-[#F5E1DA] py-8">
       {/* Decorative diagonal lines */}
+
+      <Icon
+        icon={
+          isNeedForm && !successSent
+            ? "mynaui:type-italic-solid"
+            : "clarity:cursor-hand-click-line"
+        }
+        className={`absolute top-[55%] left-[55%] -translate-x-1/2 -translate-y-1/2 w-6 h-6 z-20 ${
+          !showHandClick || (isNeedForm && successSent) ? "hidden" : "block"
+        }`}
+        style={{
+          animation: "handClickBlink 0.8s ease-in-out infinite",
+          color: isNeedForm ? "rgb(227, 9, 9)" : "rgb(246, 255, 0)"
+        }}
+      />
 
       {/* Center banner with names */}
       {isNeedForm ? (
         <div className="flex flex-col gap-1 justify-center items-center w-full px-8 absolute top-1/2 -translate-y-1/2">
           {lang !== Language.en ? (
             <p className="text-center font-times text-xs uppercase tracking-[0.08em] px-2">
-              MỖI LỜI CHÚC TỪ {client?.data[lang].groupName || "QUÝ VỊ"} LÀ NIỀM
+              MỖI LỜI CHÚC TỪ{" "}
+              {client?.data[lang].groupName?.toUpperCase() || "QUÝ VỊ"} LÀ NIỀM
               VUI VÀ SỰ TRÂN QUÝ ĐỐI VỚI{" "}
               {client?.data[lang].sayOur || "CHÚNG EM"}. XIN CHÂN THÀNH CẢM ƠN
               TÌNH CẢM VÀ SỰ QUAN TÂM MÀ{" "}
-              {client?.data[lang].groupName || "QUÝ VỊ"} ĐÃ DÀNH.
+              {groupNameWithCapitalizedFirstChar || "QUÝ VỊ"} ĐÃ DÀNH.
             </p>
           ) : (
             <p className="text-center font-times text-xs uppercase tracking-[0.08em] px-2">
@@ -117,16 +163,19 @@ export default function BackCover({
       ) : (
         <div
           className="bg-background-wedding-secondary absolute top-1/2 z-10 flex h-1/5 w-full -translate-y-1/2 flex-col items-center justify-center px-10  shadow-[0px_4px_16px_2px_#3D2C2C]"
-          onClick={onClickNext}
+          onClick={handleClickNext}
+          onTouchStart={(e) => {
+            e.preventDefault();
+            handleClickNext();
+          }}
         >
           {lang !== Language.en ? (
             <p className="text-center font-times text-xs font-normal tracking-wide text-white antialiased cursor-pointer">
               Chân thành cảm ơn tình cảm yêu thương của{" "}
-              {client?.data?.[lang].groupName?.toLowerCase() ||
-                "tất cả mọi người"}{" "}
-              <br /> để ngày vui trở nên trọn vẹn và ý nghĩa. <br /> Chúc{" "}
-              {client?.data?.[lang].groupName?.toLowerCase() || "mọi người"} có
-              một ngày vui vẻ trọn vẹn và đáng nhớ. <br /> Trân trọng!
+              {groupNameWithCapitalizedFirstChar || "tất cả mọi người"} <br />{" "}
+              để ngày vui trở nên trọn vẹn và ý nghĩa. <br /> Chúc{" "}
+              {groupNameWithCapitalizedFirstChar || "mọi người"} có một ngày vui
+              vẻ trọn vẹn và đáng nhớ. <br /> Trân trọng!
             </p>
           ) : (
             <p className="text-center font-times text-xs font-normal tracking-wide text-white antialiased cursor-pointer px-8">

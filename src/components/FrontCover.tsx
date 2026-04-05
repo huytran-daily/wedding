@@ -16,7 +16,14 @@ export default function FrontCover({
   return (
     <div
       className="relative flex h-full flex-col items-center justify-between overflow-hidden bg-[#F5E1DA] py-10"
-      onClick={onClickCenterBanner}
+      onClick={(e) => {
+        e.preventDefault();
+        onClickCenterBanner?.();
+      }}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        onClickCenterBanner?.();
+      }}
     >
       {/* Decorative diagonal lines */}
       <div className="pointer-events-none absolute inset-0">
@@ -64,7 +71,14 @@ export default function FrontCover({
             "top 1s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1), filter 0.3s ease-out 0.38s, opacity 0.3s ease-out 0.38s",
           pointerEvents: bannerPhase !== "normal" ? "none" : undefined
         }}
-        onClick={onClickCenterBanner}
+        onClick={(e) => {
+          e.preventDefault();
+          onClickCenterBanner?.();
+        }}
+        onTouchStart={(e) => {
+          e.preventDefault();
+          onClickCenterBanner?.();
+        }}
       >
         <p className="font-script text-4xl font-normal italic tracking-wide text-white antialiased">
           {client?.side !== "bride"

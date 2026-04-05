@@ -5,7 +5,7 @@ import BackCover from "./components/BackCover";
 import { Icon } from "@iconify/react";
 import { clients, Language } from "./shared/theme/data";
 
-type TabView = "back" | "front" | "inside";
+type TabView = "back" | "front" | "inside" | "background";
 
 const DESIGN_H = 600;
 const FRONT_DESIGN_W = 450;
@@ -43,6 +43,9 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
   const [insideEntering, setInsideEntering] = useState(false);
 
   const handleBannerClick = () => {
+    const now = Date.now();
+    if (now - lastBannerClickTime.current < 500) return;
+    lastBannerClickTime.current = now;
     setBannerPhase("rising");
     // After rise, start blur-fade
     setTimeout(() => setBannerPhase("fading"), 1000);
@@ -57,6 +60,8 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
       );
     }, 760);
   };
+
+  const lastBannerClickTime = useRef(0);
 
   const [backEntering, setBackEntering] = useState(false);
 
@@ -107,17 +112,17 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
       setTimeout(() => setShowHandClick((prev) => !prev), 2000);
       return;
     } else {
-      if (insideStep === 0) {
-        setTimeout(() => setShowHandClick((prev) => !prev), 8000);
+      if (insideStep !== 0) {
+        setTimeout(() => setShowHandClick((prev) => !prev), 10000);
       } else {
-        setTimeout(() => setShowHandClick((prev) => !prev), 30000);
+        setTimeout(() => setShowHandClick((prev) => !prev), 3000);
       }
     }
   }, [showHandClick]);
 
   return (
     <div className="relative flex h-screen w-screen flex-col items-center gap-6 overflow-hidden px-6 pt-6 pb-6">
-      <div
+      {/* <div
         className={`flex flex-col justify-center items-center gap-1 absolute top-[60%] left-[55%] -translate-x-1/2 -translate-y-1/2 z-20 ${
           showHandClick && activeTab !== "back" ? "block" : "hidden"
         }`}
@@ -133,10 +138,20 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
                 : "rgba(233, 230, 231, 0.8)"
           }}
         />
-        <span className="text-sm text-text-wedding-red font-times">
+        <span className="text-xs text-text-wedding-red font-times">
           {lang !== Language.en ? "Nhấn để tiếp tục" : "Click to continue"}
         </span>
-      </div>
+      </div> */}
+      <Icon
+        icon="clarity:cursor-hand-click-line"
+        className={`absolute top-[55%] left-[55%] -translate-x-1/2 -translate-y-1/2 -rotate-30 w-6 h-6 z-20 ${
+          showHandClick && activeTab !== "back" ? "block" : "hidden"
+        }`}
+        style={{
+          animation: "handClickBlink 0.8s ease-in-out infinite",
+          color: activeTab === "inside" ? "rgb(227, 9, 9)" : "rgb(255, 145, 0)"
+        }}
+      />
       {/* Card view — flex-1 fills remaining height, centers card both axes */}
       <div className="flex flex-1 items-center justify-center">
         {activeTab === "front" && (
@@ -196,6 +211,7 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
               }}
             >
               <InsidePage
+                insideStep={insideStep}
                 onClickInside={handleInsideClick}
                 client={client}
                 lang={lang}
@@ -226,6 +242,7 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
                 client={client}
                 lang={lang}
                 onClickNext={() => {
+                  lastBannerClickTime.current = Date.now();
                   setBannerPhase("normal");
                   setInsideStep(0);
                   setLang((prev) =>
@@ -234,6 +251,29 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
                   setActiveTab("front");
                 }}
               />
+            </div>
+          </div>
+        )}
+        {activeTab === "background" && (
+          <div
+            className="flex-shrink-0 overflow-hidden rounded-2xl shadow-xl cursor-pointer"
+            style={{
+              height: DESIGN_H * scale,
+              width: FRONT_DESIGN_W * scale,
+              filter: backEntering ? "blur(12px)" : "blur(0px)",
+              opacity: backEntering ? 0 : 1,
+              transition: "filter 0.5s ease-out, opacity 0.5s ease-out"
+            }}
+          >
+            <div
+              style={{
+                width: FRONT_DESIGN_W,
+                height: DESIGN_H,
+                transform: `scale(${scale})`,
+                transformOrigin: "top left"
+              }}
+            >
+              <div className="relative flex h-full flex-col items-center justify-end overflow-hidden bg-none py-8" />
             </div>
           </div>
         )}

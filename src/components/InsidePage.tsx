@@ -6,27 +6,38 @@ import { Language, type Client } from "../shared/theme/data";
 import LeftFamily from "./LeftFamily";
 import RightFamily from "./RightFamily";
 import { createClient } from "@supabase/supabase-js";
-import { useState } from "react";
+import { useState, useRef } from "react";
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 interface Props {
+  insideStep: number;
   client?: Client;
   lang: Language;
   onClickInside?: () => void;
 }
 
-export default function InsidePage({ client, lang, onClickInside }: Props) {
+export default function InsidePage({
+  client,
+  lang,
+  onClickInside,
+  insideStep
+}: Props) {
   const [isTyping, setIsTyping] = useState(false);
 
   const [successSent, setSuccessSent] = useState(false);
 
   const [typedMessage, setTypedMessage] = useState("");
 
+  const lastClickTime = useRef(0);
+
   const handleClickInside = () => {
-    if (isTyping) return; // Prevent multiple clicks while typing
-    return onClickInside?.();
+    if (isTyping) return;
+    const now = Date.now();
+    if (now - lastClickTime.current < 500) return;
+    lastClickTime.current = now;
+    onClickInside?.();
   };
 
   const handleSendMessage = async (message: string) => {
@@ -49,7 +60,14 @@ export default function InsidePage({ client, lang, onClickInside }: Props) {
   };
 
   return (
-    <div className="flex h-full cursor-pointer" onClick={handleClickInside}>
+    <div
+      className="flex h-full cursor-pointer"
+      onClick={handleClickInside}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        handleClickInside();
+      }}
+    >
       {/* Left panel — decorative envelope flap */}
       <div className="relative w-[17%] flex-shrink-0 overflow-hidden border-r border-[#C4A08A]/60 bg-transparent">
         <div
@@ -87,6 +105,15 @@ export default function InsidePage({ client, lang, onClickInside }: Props) {
             </span>
           </p>
         </div>
+
+        {insideStep === 1 && (
+          <button
+            className="absolute top-[calc(50%+40px)] right-0 -translate-y-1/2 -translate-x-1/2 px-2 py-1 bg-[#7e3549] text-text-wedding-pink rounded-md text-[10px] cursor-pointer disabled:bg-[#7e3549]/50"
+            onClick={handleClickInside}
+          >
+            →
+          </button>
+        )}
 
         <div className="mt-10 flex flex-col items-center justify-center gap-6">
           {/* Left name */}
@@ -194,6 +221,15 @@ export default function InsidePage({ client, lang, onClickInside }: Props) {
                 : `about our upcoming happy wedding. ${client?.data[lang].message}`}
           </p>
         </div>
+
+        {insideStep === 2 && (
+          <button
+            className="absolute top-[calc(50%+40px)] right-0 -translate-y-1/2 -translate-x-1/2 px-2 py-1 bg-[#7e3549] text-text-wedding-pink rounded-md text-[10px] cursor-pointer disabled:bg-[#7e3549]/50"
+            onClick={handleClickInside}
+          >
+            →
+          </button>
+        )}
 
         {/* Venue */}
         {client?.type !== "notice" ? (
