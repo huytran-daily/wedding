@@ -242,13 +242,24 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
   );
 }
 
+function isZaloBrowser(): boolean {
+  const ua = navigator.userAgent;
+
+  // Android: UA contains "Zalo"
+  const isAndroid = /Android/i.test(ua);
+  const isZaloAndroid = isAndroid && /Zalo/i.test(ua);
+
+  // iOS: Zalo uses WKWebView — no "Zalo" in UA
+  // Detect as iOS WebView: has iPhone/iPad but no "Safari" token
+  const isIOS = /iphone|ipad|ipod/i.test(ua);
+  const isSafari = /safari/i.test(ua);
+  const isIOSWebView = isIOS && !isSafari;
+
+  return isZaloAndroid || isIOSWebView;
+}
+
 function App() {
-  // const videoRef = useRef<HTMLVideoElement>(null);
-  const params = new URLSearchParams(window.location.search);
-
-  const clientId = params.get("id");
-
-  const client = clients.find((c) => c.id === clientId);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -293,12 +304,6 @@ function App() {
 
   return (
     <div className="relative min-h-screen">
-      <img
-        className="fixed top-0 left-0 w-full h-full object-cover"
-        src={`${import.meta.env.BASE_URL}/video/${isMobile ? `${client?.side !== "bride" ? "wedding_bg_mobile.webp" : "wedding_bg_mobile.webp"}` : `${client?.side !== "bride" ? "wedding_bg_desktop.webp" : "wedding_bg_desktop.webp"}`}`}
-        alt="Background"
-        style={{ zIndex: 0 }}
-      />
       <audio
         ref={audioRef}
         src={`${import.meta.env.BASE_URL}/video/audio_wedding.mp3`}
@@ -306,10 +311,31 @@ function App() {
         loop
         style={{ display: "none" }}
       />
+      {isZaloBrowser() ? (
+        <img
+          className="fixed top-0 left-0 w-full h-full object-cover"
+          src={`${import.meta.env.BASE_URL}/video/wedding_bg_mobile.webp`}
+          alt="Background"
+          style={{ zIndex: 0 }}
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          className="fixed top-0 left-0 w-full h-full object-cover"
+          src={`${import.meta.env.BASE_URL}/video/bg-2.mp4`}
+          autoPlay
+          loop
+          muted
+          playsInline
+          webkit-playsinline="true"
+        />
+      )}
+
       <div className="relative z-10">
         <InvitationPage
           onClickFrontCover={() => {
             handlePlayMusic();
+            // videoRef.current?.play();
           }}
         />
       </div>
