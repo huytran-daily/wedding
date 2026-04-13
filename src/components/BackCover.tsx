@@ -18,7 +18,10 @@ export default function BackCover({
 }: BackCoverProps) {
   const groupName = client?.data[lang].groupName.toLowerCase();
   const groupNameWithCapitalizedFirstChar = groupName
-    ? `${groupName.charAt(0).toUpperCase()}${groupName.slice(1)}`
+    ? groupName
+        .split(" ")
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(" ")
     : undefined;
 
   const lastClickTime = useRef(0);

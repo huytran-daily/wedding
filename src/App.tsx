@@ -109,13 +109,13 @@ function InvitationPage({ onClickFrontCover }: InvitationPageProps) {
 
   useEffect(() => {
     if (showHandClick) {
-      setTimeout(() => setShowHandClick((prev) => !prev), 2000);
+      setTimeout(() => setShowHandClick((prev) => !prev), 1000);
       return;
     } else {
       if (insideStep === 1 || insideStep === 2) {
         setTimeout(() => setShowHandClick((prev) => !prev), 10000);
       } else {
-        setTimeout(() => setShowHandClick((prev) => !prev), 3000);
+        setTimeout(() => setShowHandClick((prev) => !prev), 2000);
       }
     }
   }, [showHandClick]);
