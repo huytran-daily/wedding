@@ -90,6 +90,25 @@ export const clients: Client[] = [
     }
   },
   {
+    id: "416E6820DA74", // Anh Út
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "Anh Út",
+        groupName: "ANH",
+        sayOur: "chúng em",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear brother anh Ut",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
     id: "63681ECB20421A1", // chị Bơ
     type: "invite",
     side: "bride",
@@ -259,6 +278,26 @@ export const clients: Client[] = [
     }
   },
   {
+    id: "4E67F420561036E204B6861", // Kha Ngô
+    type: "notice",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "Em Kha",
+        groupName: "KHA",
+        sayOur: "anh chị",
+        message:
+          "Khoảng cách từ Gia Lai về Đà Nẵng khá xa, lại thêm em phải đang đi làm nhiệm vụ quân sự quan trọng. Tuy nhiên, em hoàn toàn có thể gửi những lời chúc tốt đẹp của mình vào “hộp thư chúc phúc” bên dưới nhé."
+      },
+      [Language.en]: {
+        name: "Kha Ngo",
+        groupName: "YOU",
+        sayOur: "our",
+        message: `Even though the distance from Gia Lai to Da Nang and your special circumstances, we understand that you may not be able to attend in person. However, you can still send your best wishes to the "blessing box" below.`
+      }
+    }
+  },
+  {
     id: "5468E16920441B01A16E67", // Thái Dương
     type: "invite",
     side: "groom",
@@ -346,13 +385,32 @@ export const clients: Client[] = [
     side: "groom",
     data: {
       [Language.vi]: {
-        name: "bạn Hoàng Hiệp & Ly",
+        name: "bạn Hoàng Hiệp & Ly ❤️",
         groupName: "HAI BẠN",
         sayOur: "chúng mình",
         message: ""
       },
       [Language.en]: {
-        name: "BFs: Hoang Hiep & Ly",
+        name: "BFs: Hoang Hiep & Ly ❤️",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "616E68205175616E67", // A Quang
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "anh Quang & ❤️",
+        groupName: "ANH QUANG",
+        sayOur: "chúng em",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear brother: Anh Quang & ❤️",
         groupName: "YOU",
         sayOur: "our",
         message: ""
@@ -372,6 +430,198 @@ export const clients: Client[] = [
       },
       [Language.en]: {
         name: "BFs: Minh Huyen & ❤️",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "43F46E67204D696E68", // Công Minh
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "V/c bạn Công Minh",
+        groupName: "HAI BẠN",
+        sayOur: "chúng mình",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear friend: Cong Minh",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "4269EA6E204CEA", // Biên Lê
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "V/c anh Biên Lê",
+        groupName: "ANH CHỊ",
+        sayOur: "chúng em",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear anh: Bien Le",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "54E0692054721EA76E", // Tài Trần
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "Em Tài & ❤️",
+        groupName: "TÀI",
+        sayOur: "anh chị",
+        message:
+          "Khoảng cách từ Trung Quốc về Việt Nam khá xa, lại thêm công việc bận rộn, nhưng anh chị vẫn rất mong hai em có thể thu xếp thời gian về Đà Nẵng và"
+      },
+      [Language.en]: {
+        name: "Our dear friend: Tai Tran & ❤️",
+        groupName: "YOU",
+        sayOur: "our",
+        message:
+          "Even though the distance from the China to Vietnam is quite far and you're busy, we still sincerely hope you can make time to come to Da Nang"
+      }
+    }
+  },
+  {
+    id: "42F969204CEA2050681B01A16E67", // a Phương
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "V/c anh Phương & chị Phượng",
+        groupName: "ANH CHỊ",
+        sayOur: "chúng em",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear anh Phuong & chi Phuong and your little family",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "4DE86F", // Mèo
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "V/c em Tâm & Phát",
+        groupName: "TÂM & PHÁT",
+        sayOur: "anh chị",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear em Tam & Phat and your little family",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "56E26E20416E68", // Vân Anh
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "em Vân Anh",
+        groupName: "VÂN ANH",
+        sayOur: "anh chị",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear sister Van Anh",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "42E16368", // Bách
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "em Bách",
+        groupName: "BÁCH",
+        sayOur: "anh chị",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear brother Bách",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "48691EBF75", // Hiếu
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "em Hiếu",
+        groupName: "HIẾU",
+        sayOur: "anh chị",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear brother Hiếu",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "4B686F61", // Khoa
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "em Khoa & ❤️",
+        groupName: "KHOA",
+        sayOur: "anh chị",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear brother Khoa & ❤️",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "56F520561036E204E676812961", // Võ Văn Nghĩa
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "Em Nghĩa & ❤️",
+        groupName: "NGHĨA",
+        sayOur: "anh chị",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Our dear friend: Nghia & ❤️",
         groupName: "YOU",
         sayOur: "our",
         message: ""
@@ -560,18 +810,18 @@ export const clients: Client[] = [
     }
   },
   {
-    id: "48751EF36E6820561036E205468751EAD6E0A", // Huỳnh Văn Thuận
+    id: "54681EA36F2053616E67", // Thảo Sang
     type: "invite",
-    side: "bride",
+    side: "groom",
     data: {
       [Language.vi]: {
-        name: "V/c anh Huỳnh Văn Thuận",
-        groupName: "QUÝ VỊ",
-        sayOur: "chúng tôi",
+        name: "chị Thảo Sang",
+        groupName: "CHỊ SANG",
+        sayOur: "chúng em",
         message: ""
       },
       [Language.en]: {
-        name: "Mr. Huỳnh Văn Thuận",
+        name: "Friends: Thao Sang",
         groupName: "YOU",
         sayOur: "our",
         message: ""
@@ -579,21 +829,80 @@ export const clients: Client[] = [
     }
   },
   {
-    id: "4E6775791EC56E2056691EC7742054691EBF6E", // Nguyễn Việt Tiến
+    id: "51751ED163204B68E16E68", // Quốc Khánh
     type: "invite",
-    side: "bride",
+    side: "groom",
     data: {
       [Language.vi]: {
-        name: "V/c bạn Tiến & Nhung",
-        groupName: "TIẾN & NHUNG",
-        sayOur: "chúng tôi",
+        name: "bạn Quốc Khánh & ❤️",
+        groupName: "KHÁNH",
+        sayOur: "chúng mình",
         message: ""
       },
       [Language.en]: {
-        name: "Friends: Tien & Nhung",
+        name: "Friends: Quoc Khanh & ❤️",
         groupName: "YOU",
         sayOur: "our",
         message: ""
+      }
+    }
+  },
+  {
+    id: "1101036E672048691EBF75", // Đăng Hiếu
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "bạn Đăng Hiếu & ❤️",
+        groupName: "HIẾU",
+        sayOur: "chúng mình",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Friends: Đăng Hiếu & ❤️",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "4C1EC720546869EA6E", // Tấn Thiện
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "bạn Tấn Thiện (Lệ) & ❤️",
+        groupName: "THIỆN",
+        sayOur: "chúng mình",
+        message: ""
+      },
+      [Language.en]: {
+        name: "Friends: Tấn Thiện (Lệ) & ❤️",
+        groupName: "YOU",
+        sayOur: "our",
+        message: ""
+      }
+    }
+  },
+  {
+    id: "431B01EDD6E672048656E7279", // Cường Henry
+    type: "invite",
+    side: "groom",
+    data: {
+      [Language.vi]: {
+        name: "V/c bạn Cường (Henry)",
+        groupName: "CƯỜNG",
+        sayOur: "chúng mình",
+        message:
+          "Khoảng cách từ Mỹ về Việt Nam khá xa, lại thêm công việc bận rộn, nhưng mình vẫn rất mong bạn có thể thu xếp thời gian về Đà Nẵng và"
+      },
+      [Language.en]: {
+        name: "My dear friend: Henry",
+        groupName: "YOU",
+        sayOur: "our",
+        message:
+          "Even though the distance from the United States to Vietnam is quite far and you're both busy, we still sincerely hope you can make time to come to Da Nang"
       }
     }
   },
